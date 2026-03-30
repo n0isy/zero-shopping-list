@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    padding: 0 80px;
+  }
+  .icon {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .title {
+    font-size: 64px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #7c6aff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+  }
+  .subtitle {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <svg class="icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="accent" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#7c6aff"/>
+        <stop offset="100%" stop-color="#6c63ff"/>
+      </linearGradient>
+    </defs>
+    <path d="M128 200 L152 420 Q156 440 176 440 L336 440 Q356 440 360 420 L384 200 Z"
+          fill="none" stroke="url(#accent)" stroke-width="20" stroke-linejoin="round"/>
+    <path d="M196 200 L196 148 Q196 100 256 100 Q316 100 316 148 L316 200"
+          fill="none" stroke="url(#accent)" stroke-width="20" stroke-linecap="round"/>
+    <path d="M188 280 L200 292 L224 264" fill="none" stroke="#4ade80" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="248" y1="278" x2="340" y2="278" stroke="#4ade80" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
+    <path d="M188 340 L200 352 L224 324" fill="none" stroke="#4ade80" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="248" y1="338" x2="320" y2="338" stroke="#4ade80" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
+    <rect x="186" y="382" width="28" height="28" rx="6" fill="none" stroke="#7c6aff" stroke-width="10" opacity="0.5"/>
+    <line x1="248" y1="396" x2="332" y2="396" stroke="#7c6aff" stroke-width="12" stroke-linecap="round" opacity="0.4"/>
+  </svg>
+  <div class="text">
+    <div class="title">Zero Shopping List</div>
+    <div class="subtitle">Real-time collaborative shopping list.<br/>Share a link — sync instantly.</div>
+  </div>
+</body>
+</html>

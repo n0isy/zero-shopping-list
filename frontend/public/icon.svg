@@ -1,4 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#6c63ff"/>
-  <path d="M30 45 L45 60 L70 35" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c6aff"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+
+  <!-- Shopping bag body -->
+  <path d="M128 200 L152 420 Q156 440 176 440 L336 440 Q356 440 360 420 L384 200 Z"
+        fill="none" stroke="url(#accent)" stroke-width="20" stroke-linejoin="round"/>
+
+  <!-- Bag handles -->
+  <path d="M196 200 L196 148 Q196 100 256 100 Q316 100 316 148 L316 200"
+        fill="none" stroke="url(#accent)" stroke-width="20" stroke-linecap="round"/>
+
+  <!-- Checklist lines -->
+  <!-- Item 1 - checked -->
+  <path d="M188 280 L200 292 L224 264"
+        fill="none" stroke="#4ade80" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="248" y1="278" x2="340" y2="278"
+        stroke="#4ade80" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- Item 2 - checked -->
+  <path d="M188 340 L200 352 L224 324"
+        fill="none" stroke="#4ade80" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="248" y1="338" x2="320" y2="338"
+        stroke="#4ade80" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- Item 3 - unchecked -->
+  <rect x="186" y="382" width="28" height="28" rx="6"
+        fill="none" stroke="#7c6aff" stroke-width="10" opacity="0.5"/>
+  <line x1="248" y1="396" x2="332" y2="396"
+        stroke="#7c6aff" stroke-width="12" stroke-linecap="round" opacity="0.4"/>
 </svg>

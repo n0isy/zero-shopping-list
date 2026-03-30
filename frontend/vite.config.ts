@@ -9,6 +9,7 @@ export default defineConfig({
     apiPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
+      devOptions: {enabled: true},
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,svg,png,woff2}'],
         runtimeCaching: [
@@ -20,7 +21,16 @@ export default defineConfig({
               expiration: {maxEntries: 20, maxAgeSeconds: 365 * 24 * 60 * 60},
             },
           },
+          {
+            urlPattern: ({url}) => url.pathname === '/' || url.pathname.startsWith('/list/'),
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'app-pages',
+              expiration: {maxEntries: 50, maxAgeSeconds: 24 * 60 * 60},
+            },
+          },
         ],
+        navigateFallback: 'index.html',
       },
       manifest: {
         name: 'Zero Shopping List',

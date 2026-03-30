@@ -6,10 +6,15 @@ import {ShoppingList} from './components/ShoppingList';
 function getListId(): string {
   const path = window.location.pathname;
   const match = path.match(/^\/list\/(.+)$/);
-  if (match) return match[1];
+  if (match) {
+    localStorage.setItem('last-list-id', match[1]);
+    return match[1];
+  }
 
-  // Homepage: redirect to a new list
-  const id = nanoid(12);
+  // Homepage: return to last list or create new
+  const saved = localStorage.getItem('last-list-id');
+  const id = saved || nanoid(12);
+  if (!saved) localStorage.setItem('last-list-id', id);
   window.history.replaceState(null, '', `/list/${id}`);
   return id;
 }
