@@ -1,0 +1,20 @@
+node_modules/
+.next/
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# env
+.env
+.env.*
+
+# editor
+*.swp
+*.swo
+*~

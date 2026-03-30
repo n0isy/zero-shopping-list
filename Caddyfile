@@ -1,0 +1,14 @@
+:80 {
+    handle /zero/* {
+        uri strip_prefix /zero
+        reverse_proxy zero-cache:4848
+    }
+
+    handle /api/* {
+        reverse_proxy frontend:3000
+    }
+
+    handle {
+        reverse_proxy frontend:3000
+    }
+}

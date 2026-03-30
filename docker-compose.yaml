@@ -1,0 +1,80 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: shopping
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_wal_senders=10
+      -c max_replication_slots=5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d shopping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  zero-cache:
+    image: node:22-alpine
+    working_dir: /app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - "4848"
+    environment:
+      ZERO_UPSTREAM_DB: "postgresql://app:app@postgres:5432/shopping"
+      ZERO_CVR_DB: "postgresql://app:app@postgres:5432/shopping"
+      ZERO_CHANGE_DB: "postgresql://app:app@postgres:5432/shopping"
+      ZERO_REPLICA_FILE: "/tmp/zero-replica.db"
+      ZERO_LOG_LEVEL: "info"
+      ZERO_LOG_FORMAT: "text"
+      ZERO_PORT: "4848"
+      ZERO_ADMIN_PASSWORD: "zeroadmin123"
+      ZERO_AUTH_JWKS_URL: ""
+      ZERO_AUTH_JWK: ""
+      ZERO_MUTATE_URL: "http://frontend:3000/api/mutate"
+      ZERO_QUERY_URL: "http://frontend:3000/api/query"
+    command: >
+      sh -c "echo '{\"type\":\"module\",\"dependencies\":{\"@rocicorp/zero\":\"1.2.0-canary.1\"}}' > /app/package.json && npm install && npx zero-cache"
+    volumes:
+      - zero-replica:/tmp
+      - ./frontend/shared:/app/shared
+
+  frontend:
+    image: node:22-alpine
+    working_dir: /app
+    depends_on:
+      - zero-cache
+    expose:
+      - "3000"
+    command: >
+      sh -c "npm install && npm run dev"
+    environment:
+      NEXT_PUBLIC_ZERO_URL: "http://zero-cache:4848"
+      ZERO_UPSTREAM_DB: "postgresql://app:app@postgres:5432/shopping"
+    volumes:
+      - ./frontend:/app
+      - frontend_nm:/app/node_modules
+      - frontend_next:/app/.next
+
+  caddy:
+    image: caddy:2-alpine
+    depends_on:
+      - frontend
+      - zero-cache
+    ports:
+      - "20060:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+
+volumes:
+  pgdata:
+  zero-replica:
+  frontend_nm:
+  frontend_next:
