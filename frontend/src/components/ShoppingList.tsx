@@ -1,5 +1,3 @@
-'use client';
-
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useQuery, useZero} from '@rocicorp/zero/react';
 import {nanoid} from 'nanoid';
@@ -15,10 +13,8 @@ export function ShoppingList({listId}: {listId: string}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  // Query the list with its items using defineQueries pattern
   const [list] = useQuery(queries.listWithItems(listId));
 
-  // Create list if it doesn't exist
   const created = useRef(false);
   useEffect(() => {
     if (!list && !created.current) {
@@ -110,7 +106,6 @@ export function ShoppingList({listId}: {listId: string}) {
 
   return (
     <div className="page">
-      {/* Header */}
       <div className="header">
         <div className="header-title">
           {editingName ? (
@@ -150,7 +145,6 @@ export function ShoppingList({listId}: {listId: string}) {
         </div>
       </div>
 
-      {/* Add Item Form */}
       <form className="add-form" onSubmit={handleAdd}>
         <input
           ref={inputRef}
@@ -167,7 +161,6 @@ export function ShoppingList({listId}: {listId: string}) {
         </button>
       </form>
 
-      {/* Counter */}
       {totalCount > 0 && (
         <div className="counter">
           <span>{totalCount} item{totalCount !== 1 ? 's' : ''}</span>
@@ -179,7 +172,6 @@ export function ShoppingList({listId}: {listId: string}) {
         </div>
       )}
 
-      {/* Items */}
       {sortedItems.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon">
@@ -224,14 +216,12 @@ export function ShoppingList({listId}: {listId: string}) {
         </div>
       )}
 
-      {/* Clear checked items */}
       {doneCount > 0 && (
         <button className="btn btn-danger clear-checked" onClick={handleClearChecked}>
           Clear {doneCount} checked item{doneCount !== 1 ? 's' : ''}
         </button>
       )}
 
-      {/* Share Modal */}
       {showShare && (
         <ShareModal listId={listId} onClose={() => setShowShare(false)} />
       )}

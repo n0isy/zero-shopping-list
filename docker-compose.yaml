@@ -54,7 +54,7 @@ services:
     volumes:
       - zero-replica:/tmp
       - zero-cache-nm:/app/node_modules
-      - ./frontend/shared:/app/shared
+      - ./shared:/app/shared
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:4848/ || exit 1"]
       interval: 5s
@@ -73,12 +73,11 @@ services:
     command: >
       sh -c "npm install && npm run dev"
     environment:
-      NEXT_PUBLIC_ZERO_URL: "http://zero-cache:4848"
       ZERO_UPSTREAM_DB: "postgresql://app:app@postgres:5432/shopping"
     volumes:
       - ./frontend:/app
+      - ./shared:/app/shared
       - frontend_nm:/app/node_modules
-      - frontend_next:/app/.next
 
   caddy:
     image: caddy:2-alpine
@@ -95,4 +94,3 @@ volumes:
   zero-replica:
   zero-cache-nm:
   frontend_nm:
-  frontend_next:

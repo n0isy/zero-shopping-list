@@ -1,5 +1,3 @@
-'use client';
-
 import type {ZeroOptions} from '@rocicorp/zero';
 import {ZeroProvider} from '@rocicorp/zero/react';
 import {useMemo, type ReactNode} from 'react';
@@ -7,7 +5,6 @@ import {schema} from '../../shared/schema';
 import {mutators} from '../../shared/mutators';
 
 function getUserID(): string {
-  if (typeof window === 'undefined') return 'anon';
   let id = localStorage.getItem('zero-user-id');
   if (!id) {
     id = 'user-' + Math.random().toString(36).slice(2, 10);
