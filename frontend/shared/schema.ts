@@ -46,6 +46,8 @@ const itemRelationships = relationships(item, ({one}) => ({
 export const schema = createSchema({
   tables: [list, item],
   relationships: [listRelationships, itemRelationships],
+  enableLegacyMutators: false,
+  enableLegacyQueries: false,
 });
 
 export const builder = createBuilder(schema);
