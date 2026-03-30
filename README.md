@@ -1,5 +1,7 @@
 # Zero Shopping List
 
+**[list.nvect.com](https://list.nvect.com)**
+
 A real-time collaborative shopping list built with [Rocicorp Zero](https://zero.rocicorp.dev/) and Next.js. Multiple users can edit the same list simultaneously — changes sync instantly across all connected clients.
 
 ## Features
@@ -7,9 +9,10 @@ A real-time collaborative shopping list built with [Rocicorp Zero](https://zero.
 - **Real-time sync** — powered by Zero's local-first architecture (IVM + WebSocket)
 - **Private rooms** — each list gets a unique nanoid URL; share it to collaborate
 - **Share via QR code** — built-in share modal with QR code and copy-to-clipboard
-- **OG meta tags** — link previews when sharing on social media / messengers
+- **OG meta tags** — dynamic OG image generation, link previews in social media / messengers
 - **Mobile-first dark theme** — large touch targets, responsive layout
 - **Offline-ready** — Zero caches data in IndexedDB; mutations queue and sync when back online
+- **Secure by default** — legacy queries/mutators disabled; clients can only access lists by ID
 
 ## Architecture
 
@@ -65,13 +68,14 @@ docker compose down -v    # reset everything
 ## Project Structure
 
 ```
-app/
 ├── docker-compose.yaml
 ├── Caddyfile
 ├── db/
 │   └── init.sql                  # PostgreSQL schema
-├── e2e/
-│   └── shopping-list.spec.ts     # Playwright e2e tests
+├── tests/
+│   └── e2e/
+│       ├── shopping-list.spec.ts # Playwright e2e tests
+│       └── permissions.spec.ts   # Data isolation & security tests
 ├── playwright.config.ts
 └── frontend/
     ├── package.json
@@ -86,7 +90,8 @@ app/
         │   ├── globals.css           # Dark theme CSS
         │   ├── list/[id]/
         │   │   ├── page.tsx          # Server component (OG meta)
-        │   │   └── client.tsx        # ClientOnly wrapper
+        │   │   ├── client.tsx        # ClientOnly wrapper
+        │   │   └── opengraph-image.tsx # Dynamic OG image
         │   └── api/
         │       ├── mutate/route.ts   # handleMutateRequest endpoint
         │       └── query/route.ts    # handleQueryRequest endpoint
@@ -107,7 +112,7 @@ npx playwright install-deps chromium
 npx playwright test
 ```
 
-Tests cover: navigation, CRUD operations, toggle/clear, share modal, and real-time sync between two browser contexts.
+Tests cover: navigation, CRUD operations, toggle/clear, share modal, real-time sync between two browser contexts, data isolation, and legacy API lockdown.
 
 ## Tech Stack
 

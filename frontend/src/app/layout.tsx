@@ -2,6 +2,7 @@ import type {Metadata, Viewport} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://list.nvect.com'),
   title: 'Zero Shopping List',
   description: 'Real-time collaborative shopping list powered by Zero sync',
   openGraph: {
